@@ -1,0 +1,11 @@
+import pytest
+from admin_lite_cart.pages.admin import IndexPage
+
+
+class TestIndexAdminPage():
+    @pytest.fixture(autouse=True)
+    def init_page(self, driver):
+        self.index_page = IndexPage(driver)
+
+    def test_login_to_admin(self):
+        assert self.index_page.check_home_icon_is_visible()
