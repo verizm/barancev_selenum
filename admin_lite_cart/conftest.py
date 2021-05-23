@@ -1,14 +1,25 @@
 import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
+
+
+def pytest_addoption(parser):
+    parser.addoption("--browser", action="store", default="chrome")
+    parser.addoption("--start_url", action="store", default="http://localhost/litecart/admin/login.php")
 
 
 @pytest.fixture(scope="session", autouse=True)
-def driver(request):
-    driver = webdriver.Chrome()
-    yield driver
+def create_driver(request, pytestconfig):
+    browser = pytestconfig.getoption("--browser")
+    if browser == "safari":
+        driver = webdriver.Safari()
+    elif browser == "chrome":
+        driver = webdriver.Chrome()
+    else:
+        raise ValueError('Unsupported browser.  Please, select from [chrome, safari]')
+    driver.maximize_window()
     request.addfinalizer(driver.quit)
+    return driver
 
 
 class BasePage(object):
@@ -20,12 +31,12 @@ class BasePage(object):
 
 
 @pytest.fixture(scope="session", autouse=True)
-def login_to_administrative(driver):
-    driver.get("http://localhost/litecart/admin/login.php")
-    username_field = driver.find_element(By.CSS_SELECTOR, "[name='username']")
+def login_to_administrative(create_driver):
+    create_driver.get("http://localhost/litecart/admin/login.php")
+    username_field = create_driver.find_element(By.CSS_SELECTOR, "[name='username']")
     username_field.send_keys("admin")
-    password = driver.find_element(By.CSS_SELECTOR, "[name='password']")
+    password = create_driver.find_element(By.CSS_SELECTOR, "[name='password']")
     password.send_keys("admin")
-    driver.find_element(By.CSS_SELECTOR, "[name='login']").click()
+    create_driver.find_element(By.CSS_SELECTOR, "[name='login']").click()
     yield
-    driver.find_element(By.CSS_SELECTOR, ".fa-sign-out").click()
+    create_driver.find_element(By.CSS_SELECTOR, ".fa-sign-out").click()
