@@ -11,3 +11,8 @@ class IndexPage(BasePage):
         return WebDriverWait(self.driver, 10).until(
             EC.visibility_of(element)
         )
+
+    def go_to_page(self):
+        elements = self.driver.find_elements(By.CSS_SELECTOR, ".name")
+        for element in elements:
+            element.click()

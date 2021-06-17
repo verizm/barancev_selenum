@@ -30,13 +30,18 @@ class BasePage(object):
         self.driver = driver
 
 
-@pytest.fixture(scope="session", autouse=True)
-def login_to_administrative(create_driver):
-    create_driver.get("http://localhost/litecart/admin/login.php")
-    username_field = create_driver.find_element(By.CSS_SELECTOR, "[name='username']")
-    username_field.send_keys("admin")
-    password = create_driver.find_element(By.CSS_SELECTOR, "[name='password']")
-    password.send_keys("admin")
-    create_driver.find_element(By.CSS_SELECTOR, "[name='login']").click()
-    yield
-    create_driver.find_element(By.CSS_SELECTOR, ".fa-sign-out").click()
+# @pytest.fixture(scope="session", autouse=True)
+# def login_to_administrative(create_driver):
+#     create_driver.get("http://localhost/litecart/admin/login.php")
+#     username_field = create_driver.find_element(By.CSS_SELECTOR, "[name='username']")
+#     username_field.send_keys("admin")
+#     password = create_driver.find_element(By.CSS_SELECTOR, "[name='password']")
+#     password.send_keys("admin")
+#     create_driver.find_element(By.CSS_SELECTOR, "[name='login']").click()
+#     yield
+#     create_driver.find_element(By.CSS_SELECTOR, ".fa-sign-out").click()
+
+
+@pytest.fixture(scope="session")
+def open_main_page_litecart(create_driver):
+    create_driver.get("http://localhost/litecart/en/")
