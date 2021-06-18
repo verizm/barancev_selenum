@@ -5,9 +5,11 @@ from admin_lite_cart.conftest import BasePage
 
 
 class IndexPage(BasePage):
+    icon = (By.CSS_SELECTOR, ".fa-home")
 
     def check_home_icon_is_visible(self):
-        element = self.driver.find_element(By.CSS_SELECTOR, ".fa-home")
+        element = self.find_element(self.icon)
+
         return WebDriverWait(self.driver, 10).until(
             EC.visibility_of(element)
         )
