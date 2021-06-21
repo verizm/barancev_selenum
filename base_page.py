@@ -33,7 +33,13 @@ class BasePage(object):
 
     def find_element(self, locator, timeout=5):
         return WebDriverWait(self.driver, timeout).until(
-            EC.visibility_of_element_located(locator), ' : '.join(locator))
-    #
-    # def find_elements(self, locator, timeout=5):
-    #     return WebDriverWait(self.driver, timeout).until(EC.presence_of_all_elements_located((locator)))
+            EC.visibility_of_element_located(locator))
+
+    def find_elements(self, locator, timeout=5):
+        return WebDriverWait(self.driver, timeout).until(EC.visibility_of_all_elements_located(locator))
+
+    def find(self, locator, timeout=5):
+        return WebDriverWait(self.driver, timeout).until(lambda d: d.find_element(*locator))
+
+    def finds(self, locator, timeout=5):
+        return WebDriverWait(self.driver, timeout).until(lambda d: d.find_elements(*locator))

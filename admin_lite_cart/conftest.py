@@ -9,20 +9,20 @@ def pytest_addoption(parser):
     parser.addoption("--base_url", action="store", default="http://localhost/")
 
 
-class AdminPage(BasePage):
-    # _username = (By.CSS_SELECTOR, "[name='username']")
-    # _password = (By.CSS_SELECTOR, "[name='password']")
-    # _login = (By.CSS_SELECTOR, "[name='login']")
+class LoginAdminPage(BasePage):
+    username = (By.CSS_SELECTOR, "[name='username']")
+    password = (By.CSS_SELECTOR, "[name='password']")
+    login = (By.CSS_SELECTOR, "[name='login']")
 
     def __init__(self, driver, url):
         super().__init__(driver)
         self.url = url
         self.navigate_to(self.url + "litecart/admin/login.php")
-        username_field = self.driver.find_element(By.CSS_SELECTOR, "[name='username']")
+        username_field = self.find_element(self.username)
         username_field.send_keys("admin")
-        password = self.driver.find_element(By.CSS_SELECTOR, "[name='password']")
+        password = self.find_element(self.password)
         password.send_keys("admin")
-        self.driver.find_element(By.CSS_SELECTOR, "[name='login']").click()
+        self.find_element(self.login).click()
         # self.driver.find_element(By.CSS_SELECTOR, ".fa-sign-out").click()
 
     def get_driver(self):
@@ -49,7 +49,7 @@ def create_factory(request, pytestconfig):
             self.driver = driver
 
         def go_to_admin_page(self):
-            return AdminPage(driver, url)
+            return LoginAdminPage(driver, url)
 
         def go_to_store(self):
             return StorePage(driver, url)
