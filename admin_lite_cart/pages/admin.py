@@ -2,7 +2,7 @@ import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-from admin_lite_cart.conftest import BasePage
+from admin_lite_cart.base_page import BasePage
 
 
 class AdminPage(BasePage):

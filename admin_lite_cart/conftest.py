@@ -1,7 +1,7 @@
 import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from base_page import BasePage
+from admin_lite_cart.base_page import BasePage
 
 
 def pytest_addoption(parser):
