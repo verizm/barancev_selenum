@@ -34,10 +34,7 @@ class Countries(BasePage):
     def go_back(self):
         self.navigate_back()
 
-    # def click_country_by_names(self):
-    #     countries = self.find_elements(self._country_td)
-    #     element = self.get_element_by_text(countries, name)
-    #     return self.click(element)
+
 
 
 
