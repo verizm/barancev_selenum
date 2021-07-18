@@ -26,7 +26,7 @@ class BasePage(object):
         web_element.click()
 
     @classmethod
-    def send(cls, web_element, text):
+    def send(cls, web_element, text: str):
         web_element.clear()
         web_element.send_keys(text)
 

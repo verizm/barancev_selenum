@@ -9,7 +9,9 @@ class StoreLitecart(BasePage):
     _regular_price = (By.CSS_SELECTOR, "#box-campaigns .regular-price")
     _item_campaign_price = (By.CSS_SELECTOR, ".campaign-price")
     _item_regular_price = (By.CSS_SELECTOR, ".regular-price")
-
+    _name_of_user = (By.CSS_SELECTOR, "[name='email']")
+    _password_of_user = (By.CSS_SELECTOR, "[name='password']")
+    _login_button = (By.CSS_SELECTOR, "[name='login']")
     _h1 = (By.CSS_SELECTOR, "h1")
 
     def check_all_stickers(self):
@@ -70,3 +72,8 @@ class StoreLitecart(BasePage):
 
     def click_on_campaings_item(self):
         return self.click(self.find(self._campaigns_item_links))
+
+    def login_to_store(self, password: str, email: str):
+        self.send(self.find_element(self._password_of_user), password)
+        self.send(self.find_element(self._name_of_user), email)
+        self.click(self.find_element(self._login_button))
